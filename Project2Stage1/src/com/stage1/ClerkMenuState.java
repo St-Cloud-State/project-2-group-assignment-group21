@@ -1,6 +1,6 @@
 package com.stage1;
 
-public class ClerkMenuState implements UIState {
+public class ClerkMenuState extends UIState {
     @Override
     public void run() {
         System.out.println("\n--- CLERK MENU ---");
