@@ -14,6 +14,12 @@ public class UIContext
     public static final int CLIENT_STATE = 1;
     public static final int CLERK_STATE = 2;
     public static final int MANAGER_STATE = 3;
+
+    public static final int TO_CLIENT = 0;
+    public static final int TO_CLERK = 1;
+    public static final int TO_MANAGER = 2;
+    public static final int TO_EXIT = 3;
+
     public static final int EXIT_STATE = -1;
     public static final int ERROR_STATE = -2;
 
