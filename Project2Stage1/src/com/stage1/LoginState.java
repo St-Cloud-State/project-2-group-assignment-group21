@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 public class LoginState extends UIState {
 
+    @SuppressWarnings("resource")
     @Override
     public void run() {
         UIContext context = UIContext.instance();
