@@ -37,7 +37,7 @@ public class LoginState extends UIState {
                 if (context.isValidClient(clientID)) {
                     context.setClientID(clientID);
                     System.out.println("Welcome, " + clientID + "!");
-                    context.changeState(UIContext.CLIENT_STATE);
+                    context.changeState(UIContext.TO_CLIENT);
                 } else {
                     System.out.println("Invalid Client ID. Please try again.");
                     run();
@@ -46,12 +46,12 @@ public class LoginState extends UIState {
 
             case "2": // Login as Clerk
                 System.out.println("Logging in as Clerk...");
-                context.changeState(UIContext.CLERK_STATE);
+                context.changeState(UIContext.TO_CLERK);
                 break;
 
             case "3": // Login as Manager
                 System.out.println("Logging in as Manager...");
-                context.changeState(UIContext.MANAGER_STATE);
+                context.changeState(UIContext.TO_MANAGER);
                 break;
 
             case "0": // Exit program
