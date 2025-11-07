@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Thomas Hoerger 2025
  * LoginState.java – Opening (Login) state for the Warehouse FSM interface.
- * Provides text-based options to log in as Client, Clerk, or Manager.
+ * Text-based options to log in as Client, Clerk, or Manager.
  */
 public class LoginState extends UIState {
 
