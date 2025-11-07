@@ -27,9 +27,9 @@ public class UIContext
 
         states = new UIState[4];
         states[LOGIN_STATE] = new LoginState();
-        states[CLIENT_STATE] = new ClientMenuState();
+        states[CLIENT_STATE] = ClientMenuState.instance();
         states[CLERK_STATE] = new ClerkMenuState();
-        states[MANAGER_STATE] = new ManagerMenuState();
+        states[MANAGER_STATE] = ManagerMenuState.instance();
 
         currentState = 0;
 
