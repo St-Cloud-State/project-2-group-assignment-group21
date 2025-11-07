@@ -91,6 +91,10 @@ public class UIContext
     {
         this.clientID = clientID;
     }
+    
+    public boolean isValidClient(String id) {
+        return warehouse.findClientById(id) != null;
+    }
 
     public void start()
     {
