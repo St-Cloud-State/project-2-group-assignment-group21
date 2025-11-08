@@ -26,9 +26,7 @@ public class UIContext
     {
         _instance = this;
         warehouse = new WarehouseSystem();
-        warehouse.addClient(new Client("C1", "St. Cloud"));
         userType = CLIENT_USER;
-        clientID = "C1";
 
         states = new UIState[4];
         states[LOGIN_STATE] = new LoginState();

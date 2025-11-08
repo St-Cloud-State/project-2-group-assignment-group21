@@ -111,13 +111,48 @@ public class ClientMenuState extends UIState {
     }
 
     private void placeOrder() {
-        Client c = warehouse.findClientById(context.getClientID());
-        Invoice inv = new Invoice(c.getId());
-        for (WishListItem item : c.getWishList()) warehouse.orderProduct(c.getId(), item, inv);
-        if (!inv.getItems().isEmpty()) {
-            warehouse.recordInvoice(c, inv);
-            System.out.println("Order placed successfully! Invoice total: $" + inv.getTotal());
-        } else System.out.println("No items were processed.");
+        Client client = warehouse.findClientById(context.getClientID());
+        Invoice invoice = new Invoice(client.getId());
+        for (WishListItem item : client.getWishList())
+        {
+            System.out.println("Select an option for " + item.getProduct().getName() + ", Quantity: " + item.getQuantity());
+            System.out.println("1. Order item");
+            System.out.println("2. Change quantity");
+            System.out.println("3. Remove item");
+            int input;
+            do {
+                input = getNumber("Please enter a valid option (1-3)");
+            } while (input < 1 || input > 3);
+            switch (input)
+            {
+                case 3:
+                    client.getWishList().removeItem(item.getProduct().getId());
+                    System.out.println("Item removed from wishlist.");
+                    break;
+                case 2:
+                    int quantity;
+                    do {
+                        quantity = getNumber("Please enter the new quantity (>0)");
+                    } while (quantity < 1);
+                    item.setQuantity(quantity);
+                case 1:
+                    int result = warehouse.orderProduct(client.getId(), item, invoice);
+                    if  (result == 0) {
+                        client.getWishList().removeItem(item.getProduct().getId());
+                        System.out.println("Item order placed successfully.");
+                    }
+                    else if (result == 1) System.out.println("Item order partially fulfilled. Remaining quantity waitlisted.");
+                    else if (result == 2) System.out.println("Item out of stock. Order waitlisted.");
+                    break;
+            }
+        }
+        if (invoice.getItems().isEmpty())
+        {
+            System.out.println("Reached end of wishlist. No items ordered.");
+            return;
+        }
+        warehouse.recordInvoice(client, invoice);
+        System.out.println("Reached end of wishlist. Invoice total: $" + invoice.getTotal());
     }
 
     private void terminate(int nextState) {

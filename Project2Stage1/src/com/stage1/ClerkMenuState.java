@@ -122,7 +122,9 @@ public class ClerkMenuState extends UIState {
         System.out.println("\n--- Outstanding Balances ---");
         while (clients.hasNext()) {
             Client c = clients.next();
-            System.out.println(c.getId() + ": " + c.getBalance());
+            if (c.getBalance() > 0) {
+                System.out.println(c.getId() + ": $" + c.getBalance());
+            }
         }
     }
 
@@ -143,6 +145,7 @@ public class ClerkMenuState extends UIState {
         String id = s.nextLine();
 
         if (warehouse.findClientById(id) != null) {
+            context.setClientID(id);
             context.changeState(UIContext.CLIENT_STATE);
             System.out.println("Switched to Client Mode.");
         } else {
