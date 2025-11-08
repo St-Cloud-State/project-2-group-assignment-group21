@@ -5,7 +5,6 @@ import java.util.*;
 
 public class ClientMenuState extends UIState {
     private static ClientMenuState instance;
-    private static WarehouseSystem warehouse = new WarehouseSystem();
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     // menu options
@@ -122,6 +121,10 @@ public class ClientMenuState extends UIState {
     }
 
     private void terminate(int nextState) {
+        if (context.getUserType() >= UIContext.CLERK_USER) {
+            System.out.println("Returning to clerk menu...");
+            nextState = UIContext.CLERK_STATE;
+        }
         context.changeState(nextState);
     }
 

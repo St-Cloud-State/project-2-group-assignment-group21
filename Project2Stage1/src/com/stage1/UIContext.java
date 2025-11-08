@@ -15,20 +15,19 @@ public class UIContext
     public static final int CLERK_STATE = 2;
     public static final int MANAGER_STATE = 3;
 
-    public static final int TO_CLIENT = 0;
-    public static final int TO_CLERK = 1;
-    public static final int TO_MANAGER = 2;
-    public static final int TO_EXIT = 3;
-
     public static final int EXIT_STATE = -1;
     public static final int ERROR_STATE = -2;
+
+    public static final int CLIENT_USER = 0;
+    public static final int CLERK_USER = 1;
+    public static final int MANAGER_USER = 2;
 
     public UIContext()
     {
         _instance = this;
         warehouse = new WarehouseSystem();
         warehouse.addClient(new Client("C1", "St. Cloud"));
-        userType = 0;
+        userType = CLIENT_USER;
         clientID = "C1";
 
         states = new UIState[4];
@@ -41,23 +40,23 @@ public class UIContext
 
         nextState = new int[4][4];
 
-        nextState[LOGIN_STATE][0] = CLIENT_STATE;
-        nextState[LOGIN_STATE][1] = CLERK_STATE;
-        nextState[LOGIN_STATE][2] = MANAGER_STATE;
-        nextState[LOGIN_STATE][3] = EXIT_STATE;
+        nextState[LOGIN_STATE][0] = EXIT_STATE;
+        nextState[LOGIN_STATE][1] = CLIENT_STATE;
+        nextState[LOGIN_STATE][2] = CLERK_STATE;
+        nextState[LOGIN_STATE][3] = MANAGER_STATE;
 
         nextState[CLIENT_STATE][0] = LOGIN_STATE;
-        nextState[CLIENT_STATE][1] = CLERK_STATE;
-        nextState[CLIENT_STATE][2] = MANAGER_STATE;
+        nextState[CLIENT_STATE][1] = ERROR_STATE;
+        nextState[CLIENT_STATE][2] = CLERK_STATE;
         nextState[CLIENT_STATE][3] = ERROR_STATE;
 
         nextState[CLERK_STATE][0] = LOGIN_STATE;
         nextState[CLERK_STATE][1] = CLIENT_STATE;
-        nextState[CLERK_STATE][2] = MANAGER_STATE;
-        nextState[CLERK_STATE][3] = ERROR_STATE;
+        nextState[CLERK_STATE][2] = ERROR_STATE;
+        nextState[CLERK_STATE][3] = MANAGER_STATE;
 
         nextState[MANAGER_STATE][0] = LOGIN_STATE;
-        nextState[MANAGER_STATE][1] = CLIENT_STATE;
+        nextState[MANAGER_STATE][1] = ERROR_STATE;
         nextState[MANAGER_STATE][2] = CLERK_STATE;
         nextState[MANAGER_STATE][3] = ERROR_STATE;
     }
@@ -75,6 +74,16 @@ public class UIContext
     public void changeState(int transition)
     {
         int newState = nextState[currentState][transition];
+        if (newState == EXIT_STATE)
+        {
+            System.out.println("Exiting program...");
+            System.exit(0);
+        }
+        if (newState == ERROR_STATE)
+        {
+            System.out.println("Error: Invalid Transition from " + currentState + " to " + transition);
+        }
+        currentState = newState;
         states[newState].run();
     }
 
@@ -88,6 +97,11 @@ public class UIContext
         this.userType = userType;
     }
 
+    public WarehouseSystem getWarehouse()
+    {
+        return warehouse;
+    }
+
     public String  getClientID()
     {
         return clientID;
@@ -96,10 +110,6 @@ public class UIContext
     public void setClientID(String clientID)
     {
         this.clientID = clientID;
-    }
-    
-    public boolean isValidClient(String id) {
-        return warehouse.findClientById(id) != null;
     }
 
     public void start()

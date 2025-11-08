@@ -4,7 +4,6 @@ import java.io.*;
 
 public class ManagerMenuState extends UIState {
     private static ManagerMenuState instance;
-    private static WarehouseSystem warehouse = new WarehouseSystem();
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     private static final int EXIT = 0;

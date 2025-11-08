@@ -34,10 +34,11 @@ public class LoginState extends UIState {
                     run();
                     return;
                 }
-                if (context.isValidClient(clientID)) {
+                if (warehouse.isValidClient(clientID)) {
                     context.setClientID(clientID);
+                    context.setUserType(UIContext.CLIENT_USER);
                     System.out.println("Welcome, " + clientID + "!");
-                    context.changeState(UIContext.TO_CLIENT);
+                    context.changeState(UIContext.CLIENT_STATE);
                 } else {
                     System.out.println("Invalid Client ID. Please try again.");
                     run();
@@ -46,17 +47,19 @@ public class LoginState extends UIState {
 
             case "2": // Login as Clerk
                 System.out.println("Logging in as Clerk...");
-                context.changeState(UIContext.TO_CLERK);
+                context.setUserType(UIContext.CLERK_USER);
+                context.changeState(UIContext.CLERK_STATE);
                 break;
 
             case "3": // Login as Manager
                 System.out.println("Logging in as Manager...");
-                context.changeState(UIContext.TO_MANAGER);
+                context.setUserType(UIContext.MANAGER_USER);
+                context.changeState(UIContext.MANAGER_STATE);
                 break;
 
             case "0": // Exit program
                 System.out.println("Exiting system. Goodbye!");
-                System.exit(0);
+                context.changeState(UIContext.LOGIN_STATE);
                 break;
 
             default:

@@ -25,6 +25,8 @@ public class WarehouseSystem {
         return inventory.findById(id);
     }
 
+    public boolean isValidClient(String id) { return findClientById(id) != null; }
+
     public void addWishlistItem(String clientId, String productId, int quantity)
     {
         Client client = findClientById(clientId);
