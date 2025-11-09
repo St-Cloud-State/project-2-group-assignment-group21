@@ -74,7 +74,6 @@ public class UIContext
         int newState = nextState[currentState][transition];
         if (newState == EXIT_STATE)
         {
-            System.out.println("Exiting program...");
             System.exit(0);
         }
         if (newState == ERROR_STATE)
